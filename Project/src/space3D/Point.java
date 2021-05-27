@@ -40,12 +40,17 @@ public class Point implements Comparable<Object> {
 	public int compareTo(Object obj) {
 		// TODO Auto-generated method stub
 		Point o = (Point)obj;
-		if(this.x - o.getX() == 0) {
-        	if(this.y - o.getY() == 0) {
-        		return (int)(this.z - o.getZ());
+		if(Math.abs(this.x - o.getX()) <= 1e-5) {
+        	if(Math.abs(this.y - o.getY()) <= 1e-5) {
+        		if(this.z > o.getZ())
+        			return 1;
+        		else return -1;
         	}
         	else
-        		return (int)(this.y - o.getY());
+        		if(this.y > o.getY())
+        			return 1;
+        		else return -1;
+        		//return (int)(this.y - o.getY());
         }
         else
         	return (int)(this.x - o.getX());

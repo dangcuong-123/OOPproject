@@ -58,8 +58,9 @@ public class Rectangular {
     		this.cornerOfRec = a;
     		System.out.println("OK");
     	}
-    	else
+    	else {
     		System.out.println("Error, input not reg");
+    	}
     }
     
     public List<Point> getcornerOfRec() {
