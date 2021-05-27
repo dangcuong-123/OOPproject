@@ -24,7 +24,7 @@ public class InputFile {
 		      e.printStackTrace();
 		}
 	}
-	
+
 	public InputFile() {}
 	
 	public Rectangular GetRectangular(String line) {
@@ -104,6 +104,30 @@ public class InputFile {
 	          }
 	          
 	    //}
+	}
+	
+	public Rectangular getRoom() {
+		return room;
+	}
+
+	public void setRoom(Rectangular room) {
+		this.room = room;
+	}
+
+	public List<Rectangular> getRecInRoom() {
+		return recInRoom;
+	}
+
+	public void setRecInRoom(List<Rectangular> recInRoom) {
+		this.recInRoom = recInRoom;
+	}
+
+	public List<Camera> getCamInRoom() {
+		return camInRoom;
+	}
+
+	public void setCamInRoom(List<Camera> camInRoom) {
+		this.camInRoom = camInRoom;
 	}
 
 }

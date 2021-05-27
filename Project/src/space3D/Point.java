@@ -17,6 +17,16 @@ public class Point implements Comparable<Object> {
 				+ Math.pow((p1.getY() - p2.getY()), 2));
 	}
 	
+	public double calcAreaFrom3Points (Point p1, Point p2, Point p3) {
+		double sum = 0;
+		sum += (p1.getX() * p2.getY() - p1.getY() * p2.getX())
+				+ (p2.getX() * p3.getY() - p2.getY() * p3.getX())
+				+ (p3.getX() * p1.getY() - p3.getY() * p1.getX());
+		
+		double area = Math.abs(sum / 2);
+		return area;
+	}
+	
 	public double getX() {
 		return x;
 	}
@@ -53,8 +63,9 @@ public class Point implements Comparable<Object> {
         		//return (int)(this.y - o.getY());
         }
         else
-        	return (int)(this.x - o.getX());
+        	if(this.x > o.getX())
+    			return 1;
+    		else return -1;
 	}
-	
 
 }

@@ -8,6 +8,29 @@ public class Room {
 	public List<Rectangular> recInRoom = new ArrayList<Rectangular>();
 	public List<Camera> camInRoom = new ArrayList<Camera>();
 	
+	public Room() {}
+	public Room(Rectangular room) {
+		if (checkCanBeTheRoom(room)) 
+			setRoom(room);
+		else 
+			System.out.println("Not room");
+	}
+	
+	public Room(Rectangular room, List<Rectangular> recInRoom) {
+		if (checkCanBeTheRoom(room)) 
+			setRoom(room);
+		else 
+			System.out.println("Not room");
+		
+	}
+	
+	public Room(Rectangular room, List<Rectangular> recInRoom, List<Camera> camInRoom) {
+		super();
+		this.room = room;
+		this.recInRoom = recInRoom;
+		this.camInRoom = camInRoom;
+	}
+	
 	// Room bat buoc co dinh diem (0, 0, 0)
 	public boolean checkCanBeTheRoom(Rectangular room) {
 		if (room.cornerOfRec.get(0).getX() != 0 || room.cornerOfRec.get(0).getY() != 0
@@ -30,16 +53,17 @@ public class Room {
 	}
 	
 	// ===================Check vat trong phong=================
-	// Check xem vat do co nam hoan toan trong phong hay ko
+	// Check xem vat co nam ngoai phong hay ko
 	public boolean checkRecOutOfRoom(Rectangular rec) {
 		for (int i=0; i<8; i++) {
 			if (checkPointInRoom(rec.cornerOfRec.get(i)) == false)
-				return false;
+				return true;
 		}	
-		return true;
+		return false;
 	}
 	
 	// Check xem 2 vat co nam tren nhau ko
+	// Vat tren nam hoan toan trong vat duoi
 	public boolean checkUpAndDownRec(Rectangular rec1, Rectangular rec2) {
 		// vat tren rec1
 		// vat duoi rec2
@@ -53,15 +77,12 @@ public class Room {
 			return false;
 		// toa do cua mat duoi vat tren rec1 : 0, 2, 4, 6 : z
 		// toa do cua mat tren vat duoi rec2 : 1, 3, 5, 7 : z
-		// Neu x_nho_rec2 <= x_rec1 <= x_lon_rec2
-		// va y_nho_rec2 <= y_rec1 <= y_lon_rec2
-		if ((rec1.cornerOfRec.get(0).getX() <= rec2.cornerOfRec.get(1).getX()) &&
-				(rec1.cornerOfRec.get(4).getX() <= rec2.cornerOfRec.get(5).getX()) &&
-				(rec1.cornerOfRec.get(0).getY() <= rec2.cornerOfRec.get(1).getY()) &&
-				(rec1.cornerOfRec.get(2).getY() <= rec2.cornerOfRec.get(3).getY()))
-			return true;
-		else
-			return false;
+		// toa do 4 dinh mat duoi vat tren thuoc mat tren vat duoi
+		for (int i=0;i<8;i+=2)
+			if (rec2.pointInRec(rec1.cornerOfRec.get(i)) == false)
+				return false;
+		
+		return true;
 	}
 	
 	public boolean checkRecInRoom(List<Rectangular> recInRoom) {
@@ -111,20 +132,6 @@ public class Room {
 		return true;
 	}
 	// ======================================
-	public Room(Rectangular room) {
-		if (checkCanBeTheRoom(room)) 
-			setRoom(room);
-		else 
-			System.out.println("Not room");
-	}
-	
-	public Room(Rectangular room, List<Rectangular> recInRoom) {
-		if (checkCanBeTheRoom(room)) 
-			setRoom(room);
-		else 
-			System.out.println("Not room");
-		
-	}
 	
 	public List<Rectangular> getRecInRoom() {
 		return recInRoom;

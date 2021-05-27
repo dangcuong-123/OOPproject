@@ -6,8 +6,29 @@ import java.util.List;
 
 public class Rectangular {
     public List<Point> cornerOfRec = new ArrayList<Point>();
+	
+    public Rectangular() {}
     
-	public boolean checkReg (List<Point> a) {
+    public Rectangular(List<Point> a) {
+    	if (checkReg(a)) {
+    		this.cornerOfRec = a;
+    		System.out.println("Create successfull!!!");
+    	}
+    	else
+    		System.out.println("Error, input not reg");
+    }
+    
+//    public double calcAreaBottom () {
+//    	double sum = 0;
+//    	sum += (this.cornerOfRec.get(0).getX() * a.get(2).getY() - a.get(0).getY() * a.get(2).getX())
+//				+ (a.get(2).getX() * a.get(6).getY() - a.get(2).getY() * a.get(6).getX())
+//				+ (a.get(6).getX() * a.get(4).getY() - a.get(6).getY() * a.get(4).getX())
+//				+ (a.get(4).getX() * a.get(0).getY() - a.get(4).getY() * a.get(0).getX());
+//    	double area = Math.abs(sum / 2);
+//    	return area;
+//    }
+    
+    public boolean checkReg (List<Point> a) {
 		Collections.sort(a);	// Tra ve danh sach 8 diem, sort theo x -> y -> z
     	
     	// x tang dan theo cap (0,1)(2,3)(4,5)(6,7)
@@ -37,6 +58,7 @@ public class Rectangular {
 			return false;
 		
 		// Check hinh chu nhat (Xet 4 diem 0, 2, 4, 6))
+		// Neu dien tich hinh binh hanh ko = hcn thi sai
 		// Cong thuc tinh dien tich da giac
 		double sum = 0;
 		sum += (a.get(0).getX() * a.get(2).getY() - a.get(0).getY() * a.get(2).getX())
@@ -50,17 +72,29 @@ public class Rectangular {
 			return false;
     	return true;
     }
-
-    public Rectangular() {}
     
-    public Rectangular(List<Point> a) {
-    	if (checkReg(a)) {
-    		this.cornerOfRec = a;
-    		System.out.println("OK");
-    	}
-    	else {
-    		System.out.println("Error, input not reg");
-    	}
+    public boolean pointInRec(Point position) {
+    	
+    	double sumArea = 0;
+    	sumArea += position.calcAreaFrom3Points(position,
+					this.cornerOfRec.get(0), this.cornerOfRec.get(2))
+    			+ position.calcAreaFrom3Points(position,
+    					this.cornerOfRec.get(2), this.cornerOfRec.get(6))
+    			+ position.calcAreaFrom3Points(position,
+    					this.cornerOfRec.get(4), this.cornerOfRec.get(6))
+    			+ position.calcAreaFrom3Points(position,
+    					this.cornerOfRec.get(4), this.cornerOfRec.get(0));
+    	
+    	double areaBottom = 0;
+    	areaBottom += position.calcAreaFrom3Points(this.cornerOfRec.get(0)
+    						, this.cornerOfRec.get(2), this.cornerOfRec.get(6))
+    				+ position.calcAreaFrom3Points(this.cornerOfRec.get(0)
+    						, this.cornerOfRec.get(4), this.cornerOfRec.get(6));
+    	
+    	if (Math.abs(areaBottom - sumArea) >= 1e-7)
+    		return false;
+    	
+    	return true;
     }
     
     public List<Point> getcornerOfRec() {
