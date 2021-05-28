@@ -26,10 +26,10 @@ public class TestMain {
 //		test.add(new Point(0,1,1));
 //		Rectangular hey = new Rectangular(test);
 //		
-//		test1.add(new Point(1,0.5,2));
-//		test1.add(new Point(1,3,2));
-//		test1.add(new Point(0,0.5,2));
-//		test1.add(new Point(0,3,2));
+//		test1.add(new Point(1,0.5,0));
+//		test1.add(new Point(1,3,0));
+//		test1.add(new Point(0,0.5,0));
+//		test1.add(new Point(0,3,0));
 //		test1.add(new Point(1,0.5,1));
 //		test1.add(new Point(0,0.5,1));
 //		test1.add(new Point(1,3,1));
@@ -38,7 +38,8 @@ public class TestMain {
 //		
 //		Room rm = new Room();
 //		System.out.println(rm.checkUpAndDownRec(hey, hey1));
-		String url = "/home/sapphires/OOP-Java-k2n3/Lab/Project/src/input.txt";
+		
+		String url = "/home/sapphires/OOP-Java-k2n3/Lab/Project/src/input4.txt";
 		InputFile test = new InputFile(url);
 		test.GetInput();
 		Room rm = new Room(test.getRoom(), test.getRecInRoom(), test.getCamInRoom());

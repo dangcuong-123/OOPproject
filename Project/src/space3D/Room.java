@@ -17,18 +17,22 @@ public class Room {
 	}
 	
 	public Room(Rectangular room, List<Rectangular> recInRoom) {
-		if (checkCanBeTheRoom(room)) 
+		if (checkCanBeTheRoom(room) && checkAllRecInRoom(recInRoom) == true) {
 			setRoom(room);
-		else 
+			setRecInRoom(recInRoom);
+		}
+		else
 			System.out.println("Not room");
-		
 	}
 	
 	public Room(Rectangular room, List<Rectangular> recInRoom, List<Camera> camInRoom) {
-		super();
-		this.room = room;
-		this.recInRoom = recInRoom;
-		this.camInRoom = camInRoom;
+		if (checkCanBeTheRoom(room) && checkAllRecInRoom(recInRoom) == true) {
+			setRoom(room);
+			setRecInRoom(recInRoom);
+			setCamInRoom(camInRoom);
+		}
+		else
+			System.out.println("Not room");
 	}
 	
 	// Room bat buoc co dinh diem (0, 0, 0)
@@ -81,19 +85,55 @@ public class Room {
 		for (int i=0;i<8;i+=2)
 			if (rec2.pointInRec(rec1.cornerOfRec.get(i)) == false)
 				return false;
-		
 		return true;
 	}
 	
-	public boolean checkRecInRoom(List<Rectangular> recInRoom) {
-		for(int i=0;i<recInRoom.size();i++) {
-			int check = 0;
-			for(int j=i+1; j<recInRoom.size();j++) {
-				if (checkUpAndDownRec(recInRoom.get(i), recInRoom.get(j)))
-					check = 1;
+	// Check 2 vat long nhau khong
+	public boolean checkRecUnionRec(Rectangular rec1, Rectangular rec2) {
+		for (int i=0;i<8;i+=2) {
+			// Neu co 1 diem trong hinh la sai
+			if (rec2.pointInRec(rec1.cornerOfRec.get(i)) == true)
+				return true;
+			if (rec1.pointInRec(rec2.cornerOfRec.get(i)) == true)
+				return true;
+		}
+		System.out.println("Rec cannot in rec!!!");
+		return false;
+	}
+	
+	// Check cac vat trong phong co thoa man cac dieu kien khong
+	public boolean checkAllRecInRoom(List<Rectangular> recInRoom) {
+		// Tim cac vat co z_duoi > 0 (Co kha nang o tren vat khac)
+		List<Integer> positionOfFlyRec = new ArrayList<Integer>();
+		List<Integer> positionOfGroundRec = new ArrayList<Integer>();
+		for(int i=0; i<recInRoom.size();i++) {
+			if (recInRoom.get(i).getcornerOfRec().get(0).getZ() > 0)
+				positionOfFlyRec.add(i);
+			else
+				positionOfGroundRec.add(i);
+		}
+		
+		// Check vat o tren co vat o duoi khong
+		int countCanBeFly = 0;
+		for (int i=0;i<positionOfFlyRec.size();i++) {
+			Rectangular recUp = recInRoom.get(positionOfFlyRec.get(i));
+			for (int j=0;j<positionOfGroundRec.size();j++) {
+				Rectangular recDown = recInRoom.get(positionOfFlyRec.get(j));
+				if (checkUpAndDownRec(recUp, recDown) == true)
+					countCanBeFly += 1;
 			}
-			if(check == 1) {
-				return false;
+		}
+		if (countCanBeFly < positionOfFlyRec.size()) {
+			System.out.println("Rec cannot fly!!!");
+			return false;
+		}
+		// Check vat co long nhau ko
+		for (int i=0;i<positionOfGroundRec.size()-1;i++) {
+			Rectangular rec1 = recInRoom.get(positionOfFlyRec.get(i));
+			for (int j=i+1;j<positionOfGroundRec.size();j++) {
+				Rectangular rec2 = recInRoom.get(positionOfFlyRec.get(j));
+				if (checkRecUnionRec(rec1, rec2) == true)
+					return false;
 			}
 		}
 		return true;
@@ -131,6 +171,10 @@ public class Room {
 			return false;
 		return true;
 	}
+	
+	public boolean checkAllCamInRoom (List<Camera> camInRoom) {
+		return true;
+	}
 	// ======================================
 	
 	public List<Rectangular> getRecInRoom() {
@@ -147,5 +191,13 @@ public class Room {
 
 	public void setRoom(Rectangular room) {
 		this.room = room;
+	}
+	
+	public List<Camera> getCamInRoom() {
+		return camInRoom;
+	}
+	
+	public void setCamInRoom(List<Camera> camInRoom) {
+		this.camInRoom = camInRoom;
 	}
 }
