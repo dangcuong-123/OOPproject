@@ -11,7 +11,7 @@ public class CalculateHiddenArea {
 	public double scale;
 	public int w, l, h;
 	// height
-	public int[][] image;
+	
 	
 	public CalculateHiddenArea(Room myRoom) {
 		// TODO Auto-generated constructor stub

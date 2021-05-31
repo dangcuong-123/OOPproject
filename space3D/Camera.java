@@ -20,7 +20,6 @@ public class Camera {
 		this.camPosition = camPosition;
 		this.angleHeight = Math.toRadians(angleHeight);
 		this.angleWidth = Math.toRadians(angleWidth);
-		img = new Image();
 	}
 
 // Lay 4 dinh cua vung nhin thay
@@ -118,7 +117,7 @@ public class Camera {
 		this.oppositePlane = oppositePlane;
 		this.setlistPointInOppsite();
 		this.settopPlane(new Plane3D(this.camPosition, listPointInOppsite.get(0),listPointInOppsite.get(1)));
-		
+		img = new Image();
 
 	}
 	class Image{
@@ -130,15 +129,17 @@ public class Camera {
 		this.heightImg = (int)(Math.cos(angleHeight)*Math.sqrt(40000000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
 		this.matrixImg = new int[widthImg][heightImg];
 		this.matrixPoint = new Point[widthImg][heightImg];
+		
 		this.setMatrixPoint();
 		}
 
 		public void setMatrixPoint(){
 			double scale= listPointInOppsite.get(0).getZ()/heightImg;
+			
 			double x=listPointInOppsite.get(3).getX();
 			double y=listPointInOppsite.get(3).getY();
 			double z=listPointInOppsite.get(3).getZ();
-			
+		
 			if (Calculate3D.scalar(oppositePlane.getN(), new Vector3D(1, 0, 0)) == 0) {
 				for(int i = 0;i< widthImg;i++) {
 					for(int j=0;j<angleHeight;j++) {

@@ -46,11 +46,12 @@ public class TestMain {
 		String url = "C:\\Users\\nguye\\eclipse-workspace\\Projeectvv.zip_expanded\\Projectvv\\src\\input.txt";
 		InputFile test = new InputFile(url);
 		test.GetInput();
+		
 		Room rm = new Room(test.getRoom(), test.getRecInRoom(), test.getCamInRoom());	
 		
 		
 		
-		CalculateHiddenArea test1 = new CalculateHiddenArea(rm,2000000);
+		CalculateHiddenArea test1 = new CalculateHiddenArea(rm,200000);
 		
 		
 		
@@ -60,7 +61,7 @@ public class TestMain {
 		System.out.println("time : "+elapsedTimeMillis);
 	    
 	    startTime = System.currentTimeMillis();
-		System.out.println(test1.calculateHiddenVs4());
+		System.out.println(test1.calculateHiddenVs3());
 		elapsedTimeMillis = System.currentTimeMillis() - startTime;
 		System.out.println("time : "+elapsedTimeMillis);
 		
