@@ -12,12 +12,15 @@ public class Camera {
 	public Plane3D oppositePlane;
 	public double heightCam; // tam xa camera
 	public List<Point> listPointInOppsite = new ArrayList<Point>();
-
+	public Image img;
+	
 	public Camera(Point camPosition, double angleHeight, double angleWidth) {
+		
 		super();
 		this.camPosition = camPosition;
 		this.angleHeight = Math.toRadians(angleHeight);
 		this.angleWidth = Math.toRadians(angleWidth);
+		img = new Image();
 	}
 
 // Lay 4 dinh cua vung nhin thay
@@ -117,5 +120,39 @@ public class Camera {
 		this.settopPlane(new Plane3D(this.camPosition, listPointInOppsite.get(0),listPointInOppsite.get(1)));
 		
 
+	}
+	class Image{
+		public Point[][] matrixPoint ;
+		public int[][] matrixImg;
+		public int widthImg, heightImg;
+		public Image(){
+		this.widthImg = (int)(Math.cos(angleWidth)*Math.sqrt(4000000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
+		this.heightImg = (int)(Math.cos(angleHeight)*Math.sqrt(40000000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
+		this.matrixImg = new int[widthImg][heightImg];
+		this.matrixPoint = new Point[widthImg][heightImg];
+		this.setMatrixPoint();
+		}
+
+		public void setMatrixPoint(){
+			double scale= listPointInOppsite.get(0).getZ()/heightImg;
+			double x=listPointInOppsite.get(3).getX();
+			double y=listPointInOppsite.get(3).getY();
+			double z=listPointInOppsite.get(3).getZ();
+			
+			if (Calculate3D.scalar(oppositePlane.getN(), new Vector3D(1, 0, 0)) == 0) {
+				for(int i = 0;i< widthImg;i++) {
+					for(int j=0;j<angleHeight;j++) {
+					 matrixPoint[i][j]=new Point(x+i*scale,y,z+j*scale);
+					}
+				}
+			}
+			else {
+				for(int i = 0;i< widthImg;i++) {
+					for(int j=0;j<angleHeight;j++) {
+					 matrixPoint[i][j]=new Point(x,y+i*scale,z+j*scale);
+					}
+				}
+			}	
+		}
 	}
 }

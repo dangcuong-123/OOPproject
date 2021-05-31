@@ -4,7 +4,8 @@ import space3D.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.awt.Image;
+import java.awt.image.MemoryImageSource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -63,7 +64,7 @@ public class TestMain {
 		elapsedTimeMillis = System.currentTimeMillis() - startTime;
 		System.out.println("time : "+elapsedTimeMillis);
 		
-		
+	
 		
 
 	}
