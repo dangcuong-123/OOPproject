@@ -11,7 +11,7 @@ public class InputFile {
 	private File file;
 	private Scanner myReader;
 	private Rectangular room;
-	private float rate = (float)0.05; // Rate cang nho thi cang dung
+	private float rate = (float)1; // Rate cang nho thi cang dung
 	private List<Rectangular> recInRoom = new ArrayList<Rectangular>();
 	public List<Camera> camInRoom = new ArrayList<Camera>();
 

@@ -4,11 +4,16 @@ import space3D.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.MemoryImageSource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+
+
 
 public class TestMain {
 	
@@ -51,23 +56,46 @@ public class TestMain {
 		
 		
 		
-		CalculateHiddenArea test1 = new CalculateHiddenArea(rm,200000);
+		CalculateHiddenArea test1 = new CalculateHiddenArea(rm,16000000);
 		
 		
 		
 		long startTime = System.currentTimeMillis();
-		System.out.println(test1.calculateHidden());
+		//System.out.println(test1.calculateHidden());
 	    long elapsedTimeMillis = System.currentTimeMillis() - startTime;
 		System.out.println("time : "+elapsedTimeMillis);
 	    
-	    startTime = System.currentTimeMillis();
-		System.out.println(test1.calculateHiddenVs3());
-		elapsedTimeMillis = System.currentTimeMillis() - startTime;
-		System.out.println("time : "+elapsedTimeMillis);
+		
+//	    startTime = System.currentTimeMillis();
+//		System.out.println(test1.calculateHiddenVs3());
+//		elapsedTimeMillis = System.currentTimeMillis() - startTime;
+//		System.out.println("time : "+elapsedTimeMillis);
+		
+		GeneratorMatrixPixel m = new GeneratorMatrixPixel(rm.getCamInRoom().get(0), rm);
+	
+		Color[][] cl = rm.getCamInRoom().get(0).img.matrixImg;
+		int width = rm.getCamInRoom().get(0).img.widthImg;
+		int height = rm.getCamInRoom().get(0).img.heightImg;
+		JFrame frame = new JFrame("Direct draw demo");
+		
+        drawImage panel = new drawImage(width,height ,cl);
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	
 		
 
 	}
-	
+
 }

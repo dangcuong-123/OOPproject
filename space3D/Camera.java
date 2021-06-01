@@ -1,5 +1,6 @@
 package space3D;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ public class Camera {
 	public Plane3D oppositePlane;
 	public double heightCam; // tam xa camera
 	public List<Point> listPointInOppsite = new ArrayList<Point>();
+	public Point projectionInOp;
 	public Image img;
+	public int numberOp =0;
 	
 	public Camera(Point camPosition, double angleHeight, double angleWidth) {
 		
@@ -27,7 +30,6 @@ public class Camera {
 		// Tinh chieu cao chop tu giac
 		this.heightCam = Calculate3D.distancePointPlane(camPosition, oppositePlane);
 		// Tim hinh chieu camera den mat doi dien
-		Point projectionInOp;
 		projectionInOp = Calculate3D.ProjectionPointToPlane(this.getCamPosition(), oppositePlane);
 		double deltaZ = this.heightCam * Math.tan(angleHeight / 2);
 		if (Calculate3D.scalar(oppositePlane.getN(), new Vector3D(1, 0, 0)) == 0) {
@@ -113,8 +115,9 @@ public class Camera {
 		return oppositePlane;
 	}
 
-	public void setOppositePlane(Plane3D oppositePlane) {
+	public void setOppositePlane(Plane3D oppositePlane,int k) {
 		this.oppositePlane = oppositePlane;
+		this.numberOp = k;
 		this.setlistPointInOppsite();
 		this.settopPlane(new Plane3D(this.camPosition, listPointInOppsite.get(0),listPointInOppsite.get(1)));
 		img = new Image();
@@ -122,38 +125,45 @@ public class Camera {
 	}
 	class Image{
 		public Point[][] matrixPoint ;
-		public int[][] matrixImg;
+		public Color[][] matrixImg;
 		public int widthImg, heightImg;
 		public Image(){
-		this.widthImg = (int)(Math.cos(angleWidth)*Math.sqrt(4000000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
-		this.heightImg = (int)(Math.cos(angleHeight)*Math.sqrt(40000000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
-		this.matrixImg = new int[widthImg][heightImg];
+		this.widthImg = (int)(Math.cos(angleWidth)*Math.sqrt(300000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
+		this.heightImg = (int)(Math.cos(angleHeight)*Math.sqrt(300000/(Math.cos(angleWidth)*Math.cos(angleHeight))));
+		this.matrixImg = new Color[widthImg][heightImg];
 		this.matrixPoint = new Point[widthImg][heightImg];
 		
 		this.setMatrixPoint();
 		}
 
 		public void setMatrixPoint(){
-			double scale= listPointInOppsite.get(0).getZ()/heightImg;
 			
-			double x=listPointInOppsite.get(3).getX();
-			double y=listPointInOppsite.get(3).getY();
-			double z=listPointInOppsite.get(3).getZ();
+			
+			double scale=(listPointInOppsite.get(0).getZ()-listPointInOppsite.get(3).getZ())/heightImg;
 		
+			double x=projectionInOp.getX();
+			double y=projectionInOp.getY();
+			double z=projectionInOp.getZ();
+
+			
 			if (Calculate3D.scalar(oppositePlane.getN(), new Vector3D(1, 0, 0)) == 0) {
+				if((projectionInOp.y-camPosition.y)>0)scale =-scale;
 				for(int i = 0;i< widthImg;i++) {
-					for(int j=0;j<angleHeight;j++) {
-					 matrixPoint[i][j]=new Point(x+i*scale,y,z+j*scale);
+					for(int j=0;j<heightImg;j++) {
+					 matrixPoint[i][j]=new Point(x+(i-widthImg/2)*scale,y,z+(j-heightImg/2)*Math.abs(scale));
 					}
 				}
 			}
 			else {
+				if((projectionInOp.x-camPosition.x)<0)scale =-scale;
 				for(int i = 0;i< widthImg;i++) {
-					for(int j=0;j<angleHeight;j++) {
-					 matrixPoint[i][j]=new Point(x,y+i*scale,z+j*scale);
+					for(int j=0;j<heightImg;j++) {
+					 matrixPoint[i][j]=new Point(x,y+(i-widthImg/2)*scale,z+(j-heightImg/2)*Math.abs(scale));
 					}
 				}
-			}	
+			}
+
+			System.out.println(matrixPoint[widthImg/2][0]);
 		}
 	}
 }

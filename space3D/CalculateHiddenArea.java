@@ -31,7 +31,6 @@ public class CalculateHiddenArea {
 		this.longRoom = (int) (myRoom.getRoom().getcornerOfRec().get(6).getY());
 		this.highRoom = (int) (myRoom.getRoom().getcornerOfRec().get(1).getZ());
 		this.scale = Math.cbrt((double) numberPoint / (widthRoom * highRoom * longRoom));
-		System.out.println(scale);
 		w = (int) (widthRoom * scale) + 1;
 		l = (int) (longRoom * scale) + 1;
 		h = (int) (highRoom * scale) + 1;

@@ -18,12 +18,14 @@ public class Rectangular {
 			// planes0 >< planes 5
 			// 1 >< 3
 			// 2 >< 4
+			
 			planes.add(new Plane3D(a.get(0), a.get(2), a.get(4))); // Mat day 0
 			planes.add(new Plane3D(a.get(0), a.get(2), a.get(3))); // Mat ben 1
 			planes.add(new Plane3D(a.get(0), a.get(4), a.get(5))); // Mat ben 2
 			planes.add(new Plane3D(a.get(4), a.get(6), a.get(7))); // Mat ben 3
 			planes.add(new Plane3D(a.get(2), a.get(3), a.get(6))); // Mat ben 4
 			planes.add(new Plane3D(a.get(1), a.get(3), a.get(5))); // Mat dinh 5
+			System.out.println(planes.get(0));
 //    		for (Plane3D plan : planes) {
 //    			System.out.println(plan);
 //    		}
@@ -73,13 +75,13 @@ public class Rectangular {
 			return false;
 
 		if (((Math.max(Calculate3D.distancePointPlane(position, planes.get(0)),
-				Calculate3D.distancePointPlane(position, planes.get(5)))) <= Calculate3D.distanceTwoPlane(planes.get(0),
+				Calculate3D.distancePointPlane(position, planes.get(5)))) <= 1e-5+ Calculate3D.distanceTwoPlane(planes.get(0),
 						planes.get(5)))
 				&& ((Math.max(Calculate3D.distancePointPlane(position, planes.get(1)),
-						Calculate3D.distancePointPlane(position, planes.get(3)))) <= Calculate3D
+						Calculate3D.distancePointPlane(position, planes.get(3)))) <=1e-5+ Calculate3D
 								.distanceTwoPlane(planes.get(1), planes.get(3)))
 				&& ((Math.max(Calculate3D.distancePointPlane(position, planes.get(2)),
-						Calculate3D.distancePointPlane(position, planes.get(4)))) <= Calculate3D
+						Calculate3D.distancePointPlane(position, planes.get(4)))) <= 1e-5+ Calculate3D
 								.distanceTwoPlane(planes.get(2), planes.get(4))))
 			return true;
 

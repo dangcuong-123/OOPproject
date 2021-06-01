@@ -85,7 +85,9 @@ public class Calculate3D {
 	 * @return khoang cach 2 diem bat ky
 	 */
 	public static double distanceTwoPoints(Point p1, Point p2) {
-		return lenghVector(new Vector3D(p1, p2));
+		double len = lenghVector(new Vector3D(p1, p2));
+		if(len<1e-4)len=0;
+		return len;
 	}
 	
 	/**
@@ -194,15 +196,16 @@ public class Calculate3D {
 
 	public static boolean checkIntersectPointInRec(Point camPos, Point position, Line3D line, Rectangular rec) {
 		int check = 0;
-		for (int i=1;i<5;i++) {
+		
+		for (int i=0;i<6;i++) {
 			Point intersectPoint = Calculate3D.intersectionLinePlane(line, rec.getPlanes().get(i));	
 			// nhìn thấy vật 
 			if(intersectPoint == null) {
 				continue;
 			}	
 			// neu kc (cam, diem dang xet)> (cam, giao diem) thi co the khong nhin thay vat 
-			if (Calculate3D.distanceTwoPoints(camPos, position)
-					> Calculate3D.distanceTwoPoints(camPos, intersectPoint)) {
+			if (Calculate3D.distanceTwoPoints(camPos, position)+1e-7 
+					> Calculate3D.distanceTwoPoints(camPos, intersectPoint)&&scalar(new Vector3D(camPos, position), new Vector3D(camPos, intersectPoint))>0) {
 				// giao nam tren vat thi khong nhin thay 
 				if (rec.pointInRec3D(intersectPoint)) {
 					check = 1;

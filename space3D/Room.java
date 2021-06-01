@@ -149,8 +149,8 @@ public class Room {
 		for (int i = 1; i < 5; i++) {
 			if (Calculate3D.distancePointPlane(cam.getCamPosition(), this.room.getPlanes().get(i)) <= 1e-5)
 			{ 
-				if((i== 1) || (i==2))cam.setOppositePlane(this.room.getPlanes().get(i+2)); //  mat day cua camera trong truong hop nay khong gioi han nen chon luon mat tuong doi dien
-				else cam.setOppositePlane(this.room.getPlanes().get(i-2));
+				if((i== 1) || (i==2)) cam.setOppositePlane(this.room.getPlanes().get(i+2),i+2); //  mat day cua camera trong truong hop nay khong gioi han nen chon luon mat tuong doi dien
+				else cam.setOppositePlane(this.room.getPlanes().get(i-2),i-2);
 				return true;
 			}
 		}
