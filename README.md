@@ -67,7 +67,7 @@ Chương trình hiển thị năm hình chiếu của vùng khuất trong phòng
 
 - **Chức năng xác định cần phải đặt thêm tối thiểu là bao nhiêu camera nữa (và đặt ở đâu) để không còn góc khuất nào**
 
-- **Chức năng xác định các vị trí đặt camera sao cho diện tích (thể tích thì đúng hơn) phần góc khuất là bé nhất **
+- **Chức năng xác định các vị trí đặt camera sao cho diện tích (thể tích thì đúng hơn) phần góc khuất là bé nhất**
 
 
 ## B. Giao Diện
